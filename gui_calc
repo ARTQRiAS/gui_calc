@@ -1,0 +1,103 @@
+from tkinter import *
+
+
+def clear_var(flag=False):
+    if flag == True:
+        global sum, num, str_num
+        sum = 0
+        num = 0
+        str_num = ''
+
+
+def add(val):
+    if val != '=':
+        inpt.insert(END, val)
+    global sum
+    global num
+    global str_num
+    global output_clear
+
+    if output_clear == True:
+        clear_var(True)
+        output_clear = False
+        outpt.delete(0, END)
+        inpt.delete(0, END)
+
+    if val == '+':
+        str_num = ''
+        sum += num
+        num = 0
+
+    elif val == '=':
+        sum += num
+        outpt.insert(0, sum)
+        clear_var(True)
+        output_clear = True
+
+    elif val == '<':
+        inpt.delete(0, END)
+
+    elif val == 'c':
+        clear_var(True)
+        inpt.delete(0, END)
+
+    if val != '+' and val != '=' and val != '<' and val != 'c':
+        str_num += val
+        num = int(str_num)
+
+
+base = Tk()
+base.title('Calculator')
+str_num = ''
+num = 0
+sum = 0
+output_clear = False
+
+#input & output fields
+
+inpt = Entry(base)
+outpt = Entry(base)
+
+inpt.grid(row=1, column=0, columnspan=3, pady=5)
+outpt.grid(row=0, column=0, columnspan=3, pady=5)
+
+#number buttons
+
+one = Button(base, text='1', padx=20, pady=10, command=lambda: add('1'))
+two = Button(base, text='2', padx=20, pady=10, command=lambda: add('2'))
+three = Button(base, text='3', padx=20, pady=10, command=lambda: add('3'))
+four = Button(base, text='4', padx=20, pady=10, command=lambda: add('4'))
+five = Button(base, text='5', padx=20, pady=10, command=lambda: add('5'))
+six = Button(base, text='6', padx=20, pady=10, command=lambda: add('6'))
+seven = Button(base, text='7', padx=20, pady=10, command=lambda: add('7'))
+eight = Button(base, text='8', padx=20, pady=10, command=lambda: add('8'))
+nine = Button(base, text='9', padx=20, pady=10, command=lambda: add('9'))
+zero = Button(base, text='0', padx=20, pady=10, command=lambda: add('0'))
+
+one.grid(row=6, column=0)
+two.grid(row=6, column=1)
+three.grid(row=6, column=2)
+
+four.grid(row=5, column=0)
+five.grid(row=5, column=1)
+six.grid(row=5, column=2)
+
+seven.grid(row=4, column=0)
+eight.grid(row=4, column=1)
+nine.grid(row=4, column=2)
+
+zero.grid(row=7, column=0)
+
+# functions
+clear = Button(base, text='C', padx=20, pady=2, command=lambda: add('c'))
+back = Button(base, text='<', padx=20, pady=2, command=lambda: add('<'))
+add_val = Button(base, text='+', padx=20, pady=10, command=lambda: add('+'))
+equal = Button(base, text='=', padx=20, pady=10, command=lambda: add('='))
+
+clear.grid(row=2, column=1)
+back.grid(row=2, column=2)
+add_val.grid(row=7, column=1)
+equal.grid(row=7, column=2)
+
+
+base.mainloop()
